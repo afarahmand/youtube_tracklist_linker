@@ -69,6 +69,7 @@ const getVideoIdFromURL = url => {
 
 function receiver(message) {
   const videoId = getVideoIdFromURL(message["url"]);
+  if (videoId === null) { return null; }
 }
 
 chrome.runtime.onMessage.addListener(receiver);
