@@ -9,7 +9,6 @@
       "js": ["content.js"]
     }
   ],
-  "page_action": { "default_icon": "icon.png" },
   "permissions": ["tabs"],
   "background": { "persistent": false, "scripts": ["background.js"] }
 }
