@@ -51,8 +51,24 @@ const fetchJSON = videoId => {
   return db[videoId]["tracklist"];
 };
 
-function receiver(message) {
+const getVideoIdFromURL = url => {
+  let videoId = "";
 
+  let indexOfVideoId = url.search("v=");
+
+  if (indexOfVideoId === -1) { return null; }
+
+  let i = indexOfVideoId + 2;
+  while (i < url.length && url[i] !== "&") {
+    videoId+=url[i];
+    i++;
+  }
+
+  return videoId;
+};
+
+function receiver(message) {
+  const videoId = getVideoIdFromURL(message["url"]);
 }
 
 chrome.runtime.onMessage.addListener(receiver);
