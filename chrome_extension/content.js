@@ -55,45 +55,6 @@ const displayTracklist = tracklist => {
   primaryInner.insertBefore(table, meta);
 
   // -----------------------------------------------------------------
-
-
-  //
-  // let row;
-  // for(let row = 0; row < sortedTrackNumbers.length; row++) {
-  //   row = document.createElement("tr")
-  //   for(let i = 0; i < headerCellText.length; i++) {
-  //     tableHead.appendChild(
-  //       document.createElement("td").appendChild(
-  //         document.createTextNode()
-  //       )
-  //     );
-  //   }
-  // }
-
-
-
-  // cells creation
-  // for (let row = 0; row <= 2; row++) {
-  //   // table row creation
-  //   var row = document.createElement("tr");
-  //
-  //   for (var i = 0; i < 2; i++) {
-  //     // create element <td> and text node
-  //     //Make text node the contents of <td> element
-  //     // put <td> at end of the table row
-  //     var cell = document.createElement("td");
-  //     var cellText = document.createTextNode("cell is row " + j + ", column " + i);
-  //
-  //     cell.appendChild(cellText);
-  //     row.appendChild(cell);
-  //   }
-  //
-  //   //row added to end of table body
-  //   tblBody.appendChild(row);
-  // }
-  //
-  // // append the <tbody> inside the <table>
-  // tbl.appendChild(tblBody);
   // // put <table> in the <body>
   // body.appendChild(tbl);
   // // tbl border attribute to
