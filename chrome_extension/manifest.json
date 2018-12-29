@@ -7,8 +7,8 @@
     {
       "matches": ["http://*.youtube.com/*", "https://*.youtube.com/*"],
       "js": [
-        "content.js",
         "./scripts/api_utils.js",
+        "./scripts/main.js",
         "./scripts/output_display.js"
       ]
     }
