@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "YouTube Tracklist Linker",
+  "version": "0.0.1",
+  "description": "This extension displays tracklist and sample information for mixes on YouTube",
+  "content_scripts": [
+    {
+      "matches": ["http://*.youtube.com/*", "https://*.youtube.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "page_action": { "default_icon": "icon.png" },
+  "permissions": ["tabs"],
+  "background": { "persistent": false, "scripts": ["background.js"] }
+}
