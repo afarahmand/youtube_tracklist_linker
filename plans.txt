@@ -1,0 +1,47 @@
+# Todo
+
+- break into separate scripts
+- remove old table when rendering new one
+- display text as links
+- build BE(API?)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+# Display
+
+|     #     |    Start Time      |      Track        |                Sample                |
+| --------- | ------------------ | ----------------- | ------------------------------------ |
+| [1](url)  | [(H)HH:MM:SS](url) | [Track Name](url) | [Track Name](url), [Track Name](url) |
+| [2](url)  |                    |                   |                                      |
+
+
+# Tracklists
+
+| col-name        | data type  |              details                  |
+| --------------- | ---------- | ------------------------------------- |
+| id              | integer    | not null, primary key                 |
+| videoId         | string     | not null                              |
+| title           | string     | not null                              |
+| status          | string     | not null, [pending, active, rejected] |
+| tracklist       | jsonb      | not null                              |
+| creator         | string\int | not null                              |
+| evaluator       | string\int | not null                              |
+| created_at      | datetime   | not null                              |
+| updated_at      | datetime   | not null                              |
+| evaluated_at    | datetime   | not null                              |
+
+index videoId, creator, evaluator
+uniqueness [videoId, status: active]
+
+
++ + + + + + + + +
+Future Features:
++ + + + + + + + +
+- automatically, periodically backup DB
+- support for user accounts
+- support for users editing and saving tracklists
+  - limit count of unapproved tracklists (further limit count of unapproved tracklists)
+  - internal tool that compares multiple unapproved tracklists with same url during approval process
+- support for users approving tracklists
+- support for both singular tracks and mixes
+- scan for existing tracklist within the comments section using a worker\miner
