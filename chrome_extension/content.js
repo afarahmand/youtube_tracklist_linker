@@ -70,6 +70,13 @@ const getVideoIdFromURL = url => {
 function receiver(message) {
   const videoId = getVideoIdFromURL(message["url"]);
   if (videoId === null) { return null; }
+
+  console.log("DMX videoId CS: ", videoId);
+
+  // Hit BE
+  let tracklist = fetchJSON(videoId);
+
+  console.log("Tracklist Keys: ", Object.keys(tracklist));
 }
 
 chrome.runtime.onMessage.addListener(receiver);
