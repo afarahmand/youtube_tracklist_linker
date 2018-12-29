@@ -143,6 +143,11 @@ const fetchJSON = videoId => {
           startTime: "5:14",
           track: "[ALPHA CENTAURI アルファ - C:\This Feelin'](https://www.youtube.com/watch?v=tqto41sT-e0)",
           sample: "[Klique - I Can't Shake This Feeling](https://www.youtube.com/watch?v=qhvnDw6zyLQ)"
+        },
+        16: {
+          startTime: "35:33",
+          track: "[AnTgry - DANCE!](https://www.youtube.com/watch?v=BrhzJtfdojM)",
+          sample: "[Jimmy Senyah - Weakness For Your Sweetness](https://www.youtube.com/watch?v=jJ5hFjqYaXQ)"
         }
       }
     }
