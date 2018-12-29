@@ -53,5 +53,5 @@ const fetchJSON = videoId => {
     }
   };
 
-  return db[videoId]["tracklist"];
+  return db[videoId];
 };

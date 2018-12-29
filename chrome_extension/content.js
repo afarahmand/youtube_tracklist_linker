@@ -14,20 +14,18 @@ const getVideoIdFromURL = url => {
   return videoId;
 };
 
-function receiver(message) {
+function uponTabMsgReceipt(message) {
   const videoId = getVideoIdFromURL(message["url"]);
   if (videoId === null) { return null; }
 
   console.log("DMX videoId CS: ", videoId);
 
   // Hit BE
-  let tracklist = fetchJSON(videoId);
+  const videoInfo = fetchJSON(videoId);
 
-  console.log("Tracklist Keys: ", Object.keys(tracklist));
-
-  displayTracklist(tracklist);
+  displayTracklist(videoInfo);
   console.log("DMX Displayed!!!");
 }
 
-chrome.runtime.onMessage.addListener(receiver);
+chrome.runtime.onMessage.addListener(uponTabMsgReceipt);
 chrome.runtime.sendMessage({ "message": "show_page_action" });

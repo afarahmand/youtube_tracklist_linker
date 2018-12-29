@@ -1,35 +1,9 @@
-const displayTracklist = tracklist => {
-  let primaryInner = document.getElementById('primary-inner'); // Parent
-  let meta = document.getElementById('meta');                  // Child
-
-  // create elements <table> and a <tbody>
-  let table = document.createElement("table");
-  let tableHead = document.createElement("thead");
-  let row, th, td, textNode;
-
-  // Construct Table Header
-  row = document.createElement("tr");
-  const thCellText = ["#", "Start", "Track", "Sample"];
-  for(let i = 0; i < thCellText.length; i++) {
-    textNode = document.createTextNode(thCellText[i]);
-    th = document.createElement("th");
-    th.appendChild(textNode);
-    row.appendChild(th);
-  }
-
-  tableHead.appendChild(row);
-  table.appendChild(tableHead);
-
-  // Construct Table Body
+const constructTBody = (tableColumnNames, videoInfo) => {
   let tableBody = document.createElement("tbody");
-  const trackKeys = ["startTime", "track", "sample"];
-  const sortedTrackNumbers = Object.keys(tracklist).sort(function (a, b) {
-    a = Number(a);
-    b = Number(b);
-    if (a < b) return -1;
-    if (a === b) return  0;
-    if (a > b) return  1;
-  });
+  const trackKeys = tableColumnNames.slice(1);
+  const sortedTrackNumbers = Object.keys(videoInfo.tracklist).sort(spaceship);
+
+  let row, textNode, td;
 
   console.log("DMX sorted: ", sortedTrackNumbers);
   sortedTrackNumbers.forEach(trackNumber => {
@@ -42,7 +16,7 @@ const displayTracklist = tracklist => {
     row.appendChild(td);
 
     for(let coli = 0; coli < trackKeys.length; coli++) {
-      textNode = document.createTextNode(tracklist[trackNumber][trackKeys[coli]]);
+      textNode = document.createTextNode(videoInfo.tracklist[trackNumber][trackKeys[coli]]);
       td = document.createElement("td");
       td.appendChild(textNode);
       row.appendChild(td);
@@ -50,7 +24,33 @@ const displayTracklist = tracklist => {
     tableBody.appendChild(row);
   });
 
-  table.appendChild(tableBody);
+  return tableBody;
+};
+
+const constructTHead = thText => {
+  let tableHead = document.createElement("thead");
+  let row, th, textNode;
+
+  row = document.createElement("tr");
+  for(let coli = 0; coli < thText.length; coli++) {
+    textNode = document.createTextNode(thText[coli]);
+    th = document.createElement("th");
+    th.appendChild(textNode);
+    row.appendChild(th);
+  }
+
+  tableHead.appendChild(row);
+  return tableHead;
+};
+
+const displayTracklist = record => {
+  let primaryInner = document.getElementById('primary-inner'); // Parent
+  let meta = document.getElementById('meta');                  // Child
+
+  const tableColumnNames = ["#", "start", "track", "sample"];
+  let table = document.createElement("table");
+  table.appendChild(constructTHead(tableColumnNames));
+  table.appendChild(constructTBody(tableColumnNames, record));
 
   primaryInner.insertBefore(table, meta);
 
@@ -59,4 +59,12 @@ const displayTracklist = tracklist => {
   // body.appendChild(tbl);
   // // tbl border attribute to
   // tbl.setAttribute("border", "2");;
+};
+
+const spaceship = function (a, b) {
+  a = Number(a);
+  b = Number(b);
+  if (a < b) return -1;
+  if (a === b) return 0;
+  if (a > b) return  1;
 };
