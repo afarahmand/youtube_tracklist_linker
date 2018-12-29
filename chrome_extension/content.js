@@ -1,3 +1,103 @@
+const displayTracklist = tracklist => {
+  let primaryInner = document.getElementById('primary-inner'); // Parent
+  let meta = document.getElementById('meta');                  // Child
+
+  // create elements <table> and a <tbody>
+  let table = document.createElement("table");
+  let tableHead = document.createElement("thead");
+  let row, th, td, textNode;
+
+  // Construct Table Header
+  row = document.createElement("tr");
+  const thCellText = ["#", "Start", "Track", "Sample"];
+  for(let i = 0; i < thCellText.length; i++) {
+    textNode = document.createTextNode(thCellText[i]);
+    th = document.createElement("th");
+    th.appendChild(textNode);
+    row.appendChild(th);
+  }
+
+  tableHead.appendChild(row);
+  table.appendChild(tableHead);
+
+  // Construct Table Body
+  let tableBody = document.createElement("tbody");
+  const trackKeys = ["startTime", "track", "sample"];
+  const sortedTrackNumbers = Object.keys(tracklist).sort(function (a, b) {
+    if (a < b) return -1;
+    if (a === b) return  0;
+    if (a > b) return  1;
+  });
+
+  console.log("DMX sorted: ", sortedTrackNumbers);
+  sortedTrackNumbers.forEach(trackNumber => {
+    row = document.createElement("tr");
+
+    // Append track #
+    textNode = document.createTextNode(trackNumber);
+    td = document.createElement("td");
+    td.appendChild(textNode);
+    row.appendChild(td);
+
+    for(let coli = 0; coli < trackKeys.length; coli++) {
+      textNode = document.createTextNode(tracklist[trackNumber][trackKeys[coli]]);
+      td = document.createElement("td");
+      td.appendChild(textNode);
+      row.appendChild(td);
+    }
+    tableBody.appendChild(row);
+  });
+
+  table.appendChild(tableBody);
+
+  primaryInner.insertBefore(table, meta);
+
+  // -----------------------------------------------------------------
+
+
+  //
+  // let row;
+  // for(let row = 0; row < sortedTrackNumbers.length; row++) {
+  //   row = document.createElement("tr")
+  //   for(let i = 0; i < headerCellText.length; i++) {
+  //     tableHead.appendChild(
+  //       document.createElement("td").appendChild(
+  //         document.createTextNode()
+  //       )
+  //     );
+  //   }
+  // }
+
+
+
+  // cells creation
+  // for (let row = 0; row <= 2; row++) {
+  //   // table row creation
+  //   var row = document.createElement("tr");
+  //
+  //   for (var i = 0; i < 2; i++) {
+  //     // create element <td> and text node
+  //     //Make text node the contents of <td> element
+  //     // put <td> at end of the table row
+  //     var cell = document.createElement("td");
+  //     var cellText = document.createTextNode("cell is row " + j + ", column " + i);
+  //
+  //     cell.appendChild(cellText);
+  //     row.appendChild(cell);
+  //   }
+  //
+  //   //row added to end of table body
+  //   tblBody.appendChild(row);
+  // }
+  //
+  // // append the <tbody> inside the <table>
+  // tbl.appendChild(tblBody);
+  // // put <table> in the <body>
+  // body.appendChild(tbl);
+  // // tbl border attribute to
+  // tbl.setAttribute("border", "2");;
+};
+
 const fetchJSON = videoId => {
   const db = {
     "tbWS0j2fulY": {
@@ -77,6 +177,9 @@ function receiver(message) {
   let tracklist = fetchJSON(videoId);
 
   console.log("Tracklist Keys: ", Object.keys(tracklist));
+
+  displayTracklist(tracklist);
+  console.log("DMX Displayed!!!");
 }
 
 chrome.runtime.onMessage.addListener(receiver);
