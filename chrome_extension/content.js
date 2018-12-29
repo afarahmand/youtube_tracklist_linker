@@ -24,6 +24,8 @@ const displayTracklist = tracklist => {
   let tableBody = document.createElement("tbody");
   const trackKeys = ["startTime", "track", "sample"];
   const sortedTrackNumbers = Object.keys(tracklist).sort(function (a, b) {
+    a = Number(a);
+    b = Number(b);
     if (a < b) return -1;
     if (a === b) return  0;
     if (a > b) return  1;
