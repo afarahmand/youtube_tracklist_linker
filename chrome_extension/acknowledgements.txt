@@ -1,0 +1,18 @@
+Thanks to the following people for making good learning material available that made this project possible.  I recommend the material below for learning how to make your learning how to make your own Chrome extensions.
+
+// A2Z F17
+// Daniel Shiffman
+// http://shiffman.net/a2z
+// https://github.com/shiffman/A2Z-F17
+// page_action chrome extension
+
+// Aakash N S
+// https://github.com/aakashns/chrome-track-activity
+// Chrome-Track-Activity chrome extension
+
+// Construct a table using JS
+// https://stackoverflow.com/questions/14643617/create-table-using-javascript
+// https://www.w3schools.com/js/js_htmldom_nodes.asp
+
+// Inject CSS w/Chrome Extension
+// https://stackoverflow.com/questions/9118402/inject-css-for-chrome-extension
