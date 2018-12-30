@@ -2,6 +2,7 @@
 
 - display text as links
 - remove old table when rendering new one
+- add CSS classes to YouTube auto style
 - add CSS
 - support nil\undefined sample col
 - build BE(API?)
@@ -38,6 +39,16 @@
 
 index videoId, creator, evaluator
 uniqueness [videoId, status: active]
+
+tracklist: {
+  1: {
+    trackNumber: 1,
+    start: "0:00",
+    track: "[Fibre - Supernatural](https://www.youtube.com/watch?v=JHqeZi5W05A)",
+    sample: "[The Limit - Miracles](https://www.youtube.com/watch?v=Ghvyy4mCmRQ), ..."
+  },
+  2:...
+}
 
 
 + + + + + + + + +
