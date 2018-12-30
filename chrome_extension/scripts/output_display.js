@@ -1,27 +1,34 @@
+const constructAnchorElement = (url, text) => {
+  let textNode = document.createTextNode(text);
+  let anchorElement = document.createElement("a");
+  anchorElement.setAttribute("href", url);
+  anchorElement.appendChild(textNode);
+
+  return anchorElement;
+};
+
+const constructTable = videoInfo => {
+  const tableColumnNames = ["#", "start", "track", "sample"];
+  let table = document.createElement("table");
+  table.appendChild(constructTHead(tableColumnNames));
+  table.appendChild(constructTBody(tableColumnNames, videoInfo));
+
+  return table;
+};
+
 const constructTBody = (tableColumnNames, videoInfo) => {
   let tableBody = document.createElement("tbody");
-  const trackKeys = tableColumnNames.slice(1);
   const sortedTrackNumbers = Object.keys(videoInfo.tracklist).sort(spaceship);
 
   let row, textNode, td;
 
   console.log("DMX sorted: ", sortedTrackNumbers);
   sortedTrackNumbers.forEach(trackNumber => {
-    row = document.createElement("tr");
-
-    // Append track #
-    textNode = document.createTextNode(trackNumber);
-    td = document.createElement("td");
-    td.appendChild(textNode);
-    row.appendChild(td);
-
-    for(let coli = 0; coli < trackKeys.length; coli++) {
-      textNode = document.createTextNode(videoInfo.tracklist[trackNumber][trackKeys[coli]]);
-      td = document.createElement("td");
-      td.appendChild(textNode);
-      row.appendChild(td);
-    }
-    tableBody.appendChild(row);
+    tableBody.appendChild(constructTrackRow(
+      tableColumnNames,
+      videoInfo.tracklist[trackNumber],
+      videoInfo.videoId
+    ));
   });
 
   return tableBody;
@@ -43,15 +50,51 @@ const constructTHead = thText => {
   return tableHead;
 };
 
-const displayTracklist = record => {
+const constructTrackNumber = (track, videoId) => {
+  // const timeParam = convertTimeToURLParam(track.start);
+  const url = `/watch?v=${videoId}&t=${convertTimeToURLParam(track.start)}s`;
+  console.log("DMX url: ", url);
+  let link = constructAnchorElement(url, track.trackNumber.toString());
+  let td = document.createElement("td");
+  td.appendChild(link);
+
+  return td;
+};
+
+const constructTrackRow = (tableColumnNames, track, videoId) => {
+  let row = document.createElement("tr");
+  let textNode, td;
+
+  row.appendChild(constructTrackNumber(track, videoId));
+
+  for(let coli = 1; coli < tableColumnNames.length; coli++) {
+    textNode = document.createTextNode(track[tableColumnNames[coli]]);
+    td = document.createElement("td");
+    td.appendChild(textNode);
+    row.appendChild(td);
+  }
+
+  return row;
+};
+
+const convertTimeToURLParam = startTime => {
+  let numberOfSeconds = 0;
+  let timeSplit = startTime.split(":").reverse();
+
+  for(let i = 0; i < timeSplit.length; i++) {
+    if (i === 0)      { numberOfSeconds+=Number(timeSplit[i]); }
+    else if (i === 1) { numberOfSeconds+=Number(timeSplit[i])*60;}
+    else if (i === 2) { numberOfSeconds+=Number(timeSplit[i])*60*60; }
+    else if (i === 3) { numberOfSeconds+=Number(timeSplit[i])*60*60*24; }
+  }
+
+  return numberOfSeconds.toString();
+};
+
+const displayTracklist = videoInfo => {
   let primaryInner = document.getElementById('primary-inner'); // Parent
   let meta = document.getElementById('meta');                  // Child
-
-  const tableColumnNames = ["#", "start", "track", "sample"];
-  let table = document.createElement("table");
-  table.appendChild(constructTHead(tableColumnNames));
-  table.appendChild(constructTBody(tableColumnNames, record));
-
+  let table = constructTable(videoInfo);
   primaryInner.insertBefore(table, meta);
 
   // -----------------------------------------------------------------
