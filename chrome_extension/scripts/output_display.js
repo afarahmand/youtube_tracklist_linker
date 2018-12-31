@@ -1,11 +1,31 @@
 const constructAnchorElement = (url, text) => {
   let textNode = document.createTextNode(text);
   let anchorElement = document.createElement("a");
+
+  // anchorElement.classList.add("yt-simple-endpoint");
+  // anchorElement.classList.add("style-scope");
+  // anchorElement.classList.add("yt-formatted-string");
+  // anchorElement.setAttribute("spellcheck", false)
+
   anchorElement.setAttribute("href", url);
   anchorElement.appendChild(textNode);
 
   return anchorElement;
 };
+
+const constructStartTime = (startTime, videoId) => {
+  let timeParam, anchorElement;
+
+  timeParam = convertTimeToURLParam(startTime);
+  const url = `/watch?v=${videoId}&t=${convertTimeToURLParam(startTime)}s`;
+  anchorElement = constructAnchorElement(url, startTime);
+
+  // Replace converted token chars back to ',' in future
+  let td = document.createElement("td");
+  td.appendChild(anchorElement);
+
+  return td;
+}
 
 const constructTable = videoInfo => {
   const tableColumnNames = ["#", "start", "track", "sample"];
@@ -50,29 +70,43 @@ const constructTHead = thText => {
   return tableHead;
 };
 
-const constructTrackNumber = (track, videoId) => {
-  // const timeParam = convertTimeToURLParam(track.start);
-  const url = `/watch?v=${videoId}&t=${convertTimeToURLParam(track.start)}s`;
-  console.log("DMX url: ", url);
-  let link = constructAnchorElement(url, track.trackNumber.toString());
+const constructTrackNumber = (tracklistElement, videoId) => {
+  const url = `/watch?v=${videoId}&t=${convertTimeToURLParam(tracklistElement.start)}s`;
+  let link = constructAnchorElement(url, tracklistElement.trackNumber.toString());
   let td = document.createElement("td");
   td.appendChild(link);
 
   return td;
 };
 
-const constructTrackRow = (tableColumnNames, track, videoId) => {
+// WIP
+const constructTrack = track => {
+  let td, trackName, trackURL, anchorElement;
+
+  // Multi-Track
+  if (track.search(/\[.+\](.+),/) !== -1) {
+
+  } else {
+    trackName = unwrap(track.match(/\[.+\]/)[0]);
+    trackURL = unwrap(track.match(/\(.+\)/)[0]);
+    anchorElement = constructAnchorElement(trackURL, trackName);
+  }
+
+  // Replace converted token chars back to ',' in future
+  td = document.createElement("td");
+  td.appendChild(anchorElement);
+
+  return td;
+};
+
+const constructTrackRow = (tableColumnNames, tracklistElement, videoId) => {
   let row = document.createElement("tr");
   let textNode, td;
 
-  row.appendChild(constructTrackNumber(track, videoId));
-
-  for(let coli = 1; coli < tableColumnNames.length; coli++) {
-    textNode = document.createTextNode(track[tableColumnNames[coli]]);
-    td = document.createElement("td");
-    td.appendChild(textNode);
-    row.appendChild(td);
-  }
+  row.appendChild(constructTrackNumber(tracklistElement, videoId));
+  row.appendChild(constructStartTime(tracklistElement.start, videoId));
+  row.appendChild(constructTrack(tracklistElement.track));
+  row.appendChild(constructTrack(tracklistElement.sample));
 
   return row;
 };
@@ -92,7 +126,7 @@ const convertTimeToURLParam = startTime => {
 };
 
 async function displayTracklist(videoInfo) {
-  await sleep(2000);
+  await sleep(5000);
   let primaryInner = document.getElementById('primary-inner'); // Parent
   let meta = document.getElementById('meta');                  // Child
   let table = constructTable(videoInfo);
@@ -104,6 +138,8 @@ async function displayTracklist(videoInfo) {
   // // tbl border attribute to
   // tbl.setAttribute("border", "2");;
 };
+
+const unwrap = str => (str.slice(1, str.length - 1))
 
 const sleep = ms => (new Promise(resolve => setTimeout(resolve, ms)))
 
