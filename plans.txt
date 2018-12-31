@@ -1,13 +1,14 @@
 # Todo
 
-- display text as links
-- remove old table when rendering new one
+- force track and sample fields to be CSV (escape '(),[]')
+- constructTrack support for multi-track
 - render on DOMContentLoaded?
-- add CSS classes to YouTube auto style
-- add CSS
+- remove old table when rendering new one
 - support nil\undefined sample col
 - build BE(API?)
 
+- add CSS classes to YouTube auto style
+- add CSS
 - edit button creates pre-filled form
   - approval system on the BE
   - different levels of permissions and evaluation
