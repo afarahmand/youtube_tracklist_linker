@@ -2,6 +2,7 @@
 
 - display text as links
 - remove old table when rendering new one
+- render on DOMContentLoaded?
 - add CSS classes to YouTube auto style
 - add CSS
 - support nil\undefined sample col
