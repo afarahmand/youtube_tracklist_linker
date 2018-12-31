@@ -91,7 +91,8 @@ const convertTimeToURLParam = startTime => {
   return numberOfSeconds.toString();
 };
 
-const displayTracklist = videoInfo => {
+async function displayTracklist(videoInfo) {
+  await sleep(2000);
   let primaryInner = document.getElementById('primary-inner'); // Parent
   let meta = document.getElementById('meta');                  // Child
   let table = constructTable(videoInfo);
@@ -103,6 +104,8 @@ const displayTracklist = videoInfo => {
   // // tbl border attribute to
   // tbl.setAttribute("border", "2");;
 };
+
+const sleep = ms => (new Promise(resolve => setTimeout(resolve, ms)))
 
 const spaceship = function (a, b) {
   a = Number(a);
