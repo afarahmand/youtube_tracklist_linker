@@ -22,6 +22,7 @@ function uponTabMsgReceipt(message) {
 
   // Hit BE
   const videoInfo = fetchJSON(videoId);
+  if (videoInfo === undefined) { return null; }
 
   displayTracklist(videoInfo);
   console.log("DMX Displayed!!!");
