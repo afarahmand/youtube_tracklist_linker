@@ -79,22 +79,30 @@ const constructTrackNumber = (tracklistElement, videoId) => {
   return td;
 };
 
-// WIP
 const constructTrack = track => {
-  let td, trackName, trackURL, anchorElement;
+  let td, trackName, trackURL, anchorElement, indivTracks;
 
   // Multi-Track
   if (track.search(/\[.+\](.+),/) !== -1) {
-
+    anchorElement = [];
+    indivTracks = track.split(',');
+    indivTracks.forEach(indivTrack => {
+      trackName = unwrap(indivTrack.match(/\[.+\]/)[0]);
+      trackURL = unwrap(indivTrack.match(/\(.+\)/)[0]);
+      anchorElement.push(constructAnchorElement(trackURL, trackName));
+    })
   } else {
     trackName = unwrap(track.match(/\[.+\]/)[0]);
     trackURL = unwrap(track.match(/\(.+\)/)[0]);
-    anchorElement = constructAnchorElement(trackURL, trackName);
+    anchorElement = [constructAnchorElement(trackURL, trackName)];
   }
 
-  // Replace converted token chars back to ',' in future
   td = document.createElement("td");
-  td.appendChild(anchorElement);
+  anchorElement.forEach((a, idx) => {
+    td.appendChild(a);
+
+    if (idx < anchorElement.length - 1) { td.appendChild(document.createTextNode(", ")); }
+  })
 
   return td;
 };
@@ -126,7 +134,7 @@ const convertTimeToURLParam = startTime => {
 };
 
 async function displayTracklist(videoInfo) {
-  await sleep(5000);
+  await sleep(3000);
   let primaryInner = document.getElementById('primary-inner'); // Parent
   let meta = document.getElementById('meta');                  // Child
   let table = constructTable(videoInfo);

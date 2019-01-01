@@ -1,7 +1,6 @@
 # Todo
 
 - force track and sample fields to be CSV (escape '(),[]')
-- constructTrack support for multi-track
 - render on DOMContentLoaded?
 - remove old table when rendering new one
 - support nil\undefined sample col
