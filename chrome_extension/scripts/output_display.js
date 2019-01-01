@@ -27,7 +27,7 @@ const constructStartTime = (startTime, videoId) => {
   return td;
 }
 
-const constructTable = videoInfo => {
+const constructTable = (tableId, videoInfo) => {
   let tableColumnNames;
   if (everySampleNull(videoInfo.tracklist)) {
     tableColumnNames = ["#", "start", "track"];
@@ -36,6 +36,7 @@ const constructTable = videoInfo => {
   }
 
   let table = document.createElement("table");
+  table.setAttribute("id", tableId);
   table.appendChild(constructTHead(tableColumnNames));
   table.appendChild(constructTBody(tableColumnNames, videoInfo));
 
@@ -140,11 +141,11 @@ const convertTimeToURLParam = startTime => {
   return numberOfSeconds.toString();
 };
 
-async function displayTracklist(videoInfo) {
+async function displayTracklist(tableId, videoInfo) {
   await sleep(3000);
   let primaryInner = document.getElementById('primary-inner'); // Parent
   let meta = document.getElementById('meta');                  // Child
-  let table = constructTable(videoInfo);
+  let table = constructTable(tableId, videoInfo);
   primaryInner.insertBefore(table, meta);
 
   // // tbl border attribute to
@@ -158,6 +159,11 @@ const everySampleNull = tracklist => {
   }
 
   return true;
+};
+
+const removePreviouslyRenderedTable = tableId => {
+  let table = document.getElementById(tableId);
+  if (table !== null) { table.parentNode.removeChild(table); }
 };
 
 const unwrap = str => (str.slice(1, str.length - 1))

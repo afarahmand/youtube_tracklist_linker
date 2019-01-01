@@ -15,6 +15,10 @@ const getVideoIdFromURL = url => {
 };
 
 function uponTabMsgReceipt(message) {
+  // Remove previously rendered table
+  const tableId = "YouTube-tracklist-linker-table";
+  removePreviouslyRenderedTable(tableId);
+
   const videoId = getVideoIdFromURL(message["url"]);
   if (videoId === null) { return null; }
 
@@ -24,7 +28,7 @@ function uponTabMsgReceipt(message) {
   const videoInfo = fetchJSON(videoId);
   if (videoInfo === undefined) { return null; }
 
-  displayTracklist(videoInfo);
+  displayTracklist(tableId, videoInfo);
   console.log("DMX Displayed!!!");
 }
 

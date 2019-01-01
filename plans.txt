@@ -1,7 +1,6 @@
 # Todo
 
 - render on DOMContentLoaded?
-- remove old table when rendering new one
 - build BE(API?)
   - force track and sample fields to be CSV (escape '(),[]')
 
