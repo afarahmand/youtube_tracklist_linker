@@ -13,7 +13,7 @@
       ]
     }
   ],
-  "page_action": {  },
+  "page_action": {},
   "permissions": ["tabs"],
   "background": { "persistent": false, "scripts": ["background.js"] }
 }
