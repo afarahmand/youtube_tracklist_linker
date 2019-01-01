@@ -1,10 +1,9 @@
 # Todo
 
-- force track and sample fields to be CSV (escape '(),[]')
 - render on DOMContentLoaded?
 - remove old table when rendering new one
-- support nil\undefined sample col
 - build BE(API?)
+  - force track and sample fields to be CSV (escape '(),[]')
 
 - add CSS classes to YouTube auto style
 - add CSS
@@ -12,6 +11,12 @@
   - approval system on the BE
   - different levels of permissions and evaluation
   - user logins
+
+Test
+- sample column nil\undefined
+- track and sample multiple links
+-
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
