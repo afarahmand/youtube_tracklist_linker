@@ -28,7 +28,13 @@ const constructStartTime = (startTime, videoId) => {
 }
 
 const constructTable = videoInfo => {
-  const tableColumnNames = ["#", "start", "track", "sample"];
+  let tableColumnNames;
+  if (everySampleNull(videoInfo.tracklist)) {
+    tableColumnNames = ["#", "start", "track"];
+  } else {
+    tableColumnNames = ["#", "start", "track", "sample"];
+  }
+
   let table = document.createElement("table");
   table.appendChild(constructTHead(tableColumnNames));
   table.appendChild(constructTBody(tableColumnNames, videoInfo));
@@ -42,7 +48,6 @@ const constructTBody = (tableColumnNames, videoInfo) => {
 
   let row, textNode, td;
 
-  console.log("DMX sorted: ", sortedTrackNumbers);
   sortedTrackNumbers.forEach(trackNumber => {
     tableBody.appendChild(constructTrackRow(
       tableColumnNames,
@@ -114,7 +119,9 @@ const constructTrackRow = (tableColumnNames, tracklistElement, videoId) => {
   row.appendChild(constructTrackNumber(tracklistElement, videoId));
   row.appendChild(constructStartTime(tracklistElement.start, videoId));
   row.appendChild(constructTrack(tracklistElement.track));
-  row.appendChild(constructTrack(tracklistElement.sample));
+  if (tableColumnNames[3] !== undefined) {
+    row.appendChild(constructTrack(tracklistElement.sample));
+  }
 
   return row;
 };
@@ -145,6 +152,15 @@ async function displayTracklist(videoInfo) {
   // body.appendChild(tbl);
   // // tbl border attribute to
   // tbl.setAttribute("border", "2");;
+};
+
+const everySampleNull = tracklist => {
+  let trackNums = Object.keys(tracklist);
+  for(let i = 0; i < trackNums.length; i++) {
+    if (tracklist[trackNums[i]].sample !== null) { return false; }
+  }
+
+  return true;
 };
 
 const unwrap = str => (str.slice(1, str.length - 1))
