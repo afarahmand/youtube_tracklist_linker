@@ -147,11 +147,8 @@ async function displayTracklist(videoInfo) {
   let table = constructTable(videoInfo);
   primaryInner.insertBefore(table, meta);
 
-  // -----------------------------------------------------------------
-  // // put <table> in the <body>
-  // body.appendChild(tbl);
   // // tbl border attribute to
-  // tbl.setAttribute("border", "2");;
+  // tbl.setAttribute("border", "2");
 };
 
 const everySampleNull = tracklist => {
