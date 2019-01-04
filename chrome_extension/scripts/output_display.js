@@ -142,7 +142,7 @@ const convertTimeToURLParam = startTime => {
 };
 
 async function displayTracklist(tableId, videoInfo) {
-  await sleep(3000);
+  await sleep(3);
   let primaryInner = document.getElementById('primary-inner'); // Parent
   let meta = document.getElementById('meta');                  // Child
   let table = constructTable(tableId, videoInfo);
@@ -168,7 +168,7 @@ const removePreviouslyRenderedTable = tableId => {
 
 const unwrap = str => (str.slice(1, str.length - 1))
 
-const sleep = ms => (new Promise(resolve => setTimeout(resolve, ms)))
+const sleep = s => (new Promise(resolve => setTimeout(resolve, s*1000)))
 
 const spaceship = function (a, b) {
   a = Number(a);
